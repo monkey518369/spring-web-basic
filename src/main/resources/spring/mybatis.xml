@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>    
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-config.dtd">    
+<configuration>
+    <settings>  
+        <!-- 只设置需要的，其他使用默认的-->  
+        <!-- 开启缓存，默认就是开启，2层开关，需要中Mapper也指定Cache标签才会真正使用缓存 -->  
+        <setting name="cacheEnabled" value="true"/>  
+    </settings>
+    <typeHandlers>
+        <!-- 使用package元素将扫描com.cdd.gooflow.mybatis.type包下的全部类型处理器-->
+        <package name="com.cdd.gooflow.mybatis.type,com.cdd.formbuilder.mybatis"/>
+    </typeHandlers>
+</configuration>  

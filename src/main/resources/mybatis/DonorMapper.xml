@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey.repository.DonorDao">
+
+
+    <select id="findDonor" resultType="com.monkey.entity.Donor">
+        select * from test
+        <where>
+            <if test="id!=null and id != ''">
+              AND  `id` = #{id}
+            </if>
+
+            <if test="count!=null and count != ''">
+               AND `count` = #{count}
+            </if>
+        </where>
+    </select>
+
+</mapper>
