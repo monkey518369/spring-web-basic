@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
+    <!-- Spring提供的基于的redis实现的缓存管理器 -->
+
+    <!-- redis 连接池配置 -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="8"></property>
+        <property name="maxWaitMillis" value="3000"></property>
+        <property name="testOnBorrow" value="true"></property>
+    </bean>
+
+    <!--  redis 客户端工厂jedisConnectionFactory配置-->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="192.168.200.134"></property>
+        <property name="port" value="6379"></property>
+        <property name="poolConfig" ref="poolConfig"></property>
+    </bean>
+
+    <!-- redis 客户端jedis配置 -->
+    <bean id="jedis" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"></property>
+    </bean>
+
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg ref="jedis"></constructor-arg>
+        <property name="defaultExpiration" value="#{30*60}"></property>
+        <property name="usePrefix" value="true"></property>
+        <property name="expires">
+            <map key-type="java.lang.String" value-type="java.lang.Long">
+                <entry key="halfHour" value="1800"/>
+                <entry key="hour" value="3600"/>
+                <entry key="oneDay" value="86400"/>
+                <entry key="oneWeek" value="#{7 * 24 * 3600}"/>
+                <entry key="month" value="#{30 * 24 * 3600}"/>
+                <!-- shiro cache keys -->
+                <entry key="authorizationCache" value="1800"/>
+                <entry key="authenticationCache" value="1800"/>
+                <entry key="activeSessionCache" value="1800"/>
+                <entry key="shiro-activeSessionCache" value="3600"/>
+                <!-- project keys -->
+                <entry key="sysCache" value="600"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- cache注解，和spring-redis.xml中的只能使用一个 -->
+    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true"/>
+</beans>

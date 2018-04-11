@@ -30,12 +30,12 @@ public class LogAspect {
         Signature signature = jp.getSignature();
         StringBuilder log = new StringBuilder();
         if(null != signature){
-            log.append("now enter class: ");
+            log.append("now enter class: {}");
             log.append(signature.getDeclaringTypeName());
             log.append(", method: ").append(signature.getName());
             log.append(", args: ").append(ArgUtil.argsToString(jp.getArgs()));
         }
-        LOGGER.error(log.toString());
+        LOGGER.info(log.toString());
     }
 
     @AfterReturning(value = "pointCut()",returning = "returnValue")
@@ -61,13 +61,13 @@ public class LogAspect {
             }
 
         }
-        LOGGER.error(log.toString());
+        LOGGER.info(log.toString());
     }
 
     @AfterThrowing(value = "pointCut()",throwing = "ex")
     public void doAfterThrowing(JoinPoint jp,Exception ex){
-        LOGGER.error("Exception thrown in method = " + jp.toString()+","+ex.getClass().getSimpleName()+"="+ex.getMessage());
-        LOGGER.error(LogUtil.getStackTrace(ex));
+        LOGGER.info("Exception thrown in method = " + jp.toString()+","+ex.getClass().getSimpleName()+"="+ex.getMessage());
+        LOGGER.info(LogUtil.getStackTrace(ex));
     }
 
 }

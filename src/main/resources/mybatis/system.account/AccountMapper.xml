@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monkey.repository.system.account.AccountDao">
+
+    <resultMap id="base" type="Account" ></resultMap>
+
+    <insert id="insert">
+        INSERT INTO jy_base_account(
+
+        ) VALUES
+        (
+
+        )
+    </insert>
+
+    <select id="getOne" resultType="Account" parameterType="string">
+        SELECT * FROM jy_base_account WHERE id = #{id}
+    </select>
+
+    <update id="update">
+
+    </update>
+
+    <delete id="delete">
+
+    </delete>
+
+    <select id="findByPage">
+
+    </select>
+
+    <select id="findByName" resultType="Account" parameterType="string">
+        SELECT `id`,
+               `loginName`,
+               `password`,
+               `salt`,
+               `picUrl`,
+                `name`,
+                `email`,
+                `isValid`,
+                `createTime`,
+                `updateTime`
+        FROM jy_base_account
+        WHERE `loginname` LIKE CONCAT('%',#{name},'%')
+    </select>
+</mapper>

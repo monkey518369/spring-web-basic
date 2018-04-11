@@ -1,36 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>    
-<configuration status="error">    
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    status=[trace”, “debug”, “info”, “warn”, “error” and “fatal”] 为log4j2本身的日志级别，
+    monitorInterval每隔多少秒之后重新读取配置文件，这样不需要重启就可以修改配置文件,貌似并没有作用
+-->
+<configuration monitorInterval="30" status="error">
     <Appenders>    
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
         </Console>
         <RollingFile name="RollingFile"
-                     fileName="e:/logs/cctf-site.log"
-                     filePattern="e:/logs/cctf-site-%d{yyyy-MM-dd}.log">
+                     fileName="d:/logs/cctf-site.log"
+                     filePattern="d:/logs/cctf-site-%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>  
             <Policies>  
                 <TimeBasedTriggeringPolicy modulate="true" interval="1"/>  
             </Policies>
         </RollingFile>
         <RollingFile name="jdbcFile"
-                     fileName="e:/logs/cctf-jdbc.log"
-                     filePattern="e:/logs/cctf-jdbc-%d{yyyy-MM-dd}.log">
+                     fileName="d:/logs/cctf-jdbc.log"
+                     filePattern="d:/logs/cctf-jdbc-%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
             </Policies>
         </RollingFile>
+        <async name="async" blocking="true" bufferSize="8192">
+            <AppenderRef ref="Console"/>
+            <!--<AppenderRef ref="RollingFile"/>-->
+        </async>
     </Appenders>
     <Loggers>
-        <root level="INFO">
+        <!--<root level="info">
             <appender-ref ref="RollingFile"/>
             <appender-ref ref="Console"/>
+        </root>-->
+       <root level="info">
+            <appender-ref ref="async"/>
         </root>
-        <logger name="druid.sql.Statement" level="debug" additivity="false">
+       <logger name="druid.sql.Statement" level="info" additivity="false">
             <appender-ref ref="jdbcFile"/>
             <appender-ref ref="Console"/>
         </logger>
-        <logger name="druid.sql.ResultSet" level="debug" additivity="false">
+        <logger name="druid.sql.ResultSet" level="info" additivity="false">
             <appender-ref ref="jdbcFile"/>
             <appender-ref ref="Console"/>
         </logger>

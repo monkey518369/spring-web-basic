@@ -12,7 +12,7 @@
         <property name="dataSource" ref="mysqlDataSource" />
         <property name="configLocation" value="classpath:/spring/mybatis.xml" />
         <!-- 自动扫描entity目录, 省掉xml里的手工配置 -->
-        <property name="typeAliasesPackage" value="com.monkey.*.entity" />
+        <property name="typeAliasesPackage" value="com.monkey.entity" />
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations">
             <list>

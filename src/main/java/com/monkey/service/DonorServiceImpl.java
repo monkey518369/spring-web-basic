@@ -13,7 +13,6 @@ public class DonorServiceImpl implements DonorService {
     @Autowired
     private DonorDao donorDao;
 
-
     @Override
     public List<Donor> findDonor(Donor donor) {
         return donorDao.findDonor(donor);

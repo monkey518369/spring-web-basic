@@ -21,12 +21,17 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
+
+
+
     <import resource="spring-datasource.xml"/>
+    <import resource="spring-shiro.xml"/>
+    <import resource="spring-redis.xml" />
+    <!--<import resource="spring-ehcache.xml" />-->
 
+    <!--<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
 
-    <!--<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
-    <import resource="spring-ehcache.xml" />-->
-    <!--<import resource="spring-redis.xml" />-->
+    <!---->
     <!--<import resource="spring-shiro.xml"/>
     <import resource="spring-quartz-task.xml"/>
     <import resource="spring-async.xml"/>-->

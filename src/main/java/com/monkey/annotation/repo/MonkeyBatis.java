@@ -1,5 +1,15 @@
 package com.monkey.annotation.repo;
 
-public class MonkeyBatis {
+
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
+@Component
+public @interface MonkeyBatis {
+    String value() default "";
 
 }
